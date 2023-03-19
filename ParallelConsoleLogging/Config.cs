@@ -36,12 +36,11 @@ namespace ParallelConsoleLogging
             { "Ex3", new _3() },
             { "Ex4.a", new _4a() },
             { "Ex4.b", new _4b() }
-
         };
 
         private PrinterAChar? printerAChar;
 
-        public void SetPrinterChar(PrinterAChar printerAChar)
+         public void SetPrinterChar(PrinterAChar printerAChar)
         {
             this.printerAChar = printerAChar;
         }

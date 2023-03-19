@@ -1,20 +1,17 @@
-﻿namespace ParallelConsoleLogging
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ParallelConsoleLogging
 {
     internal class _1b : Command
     {
-        private PrinterAChar? printerAChar;
-
-        public void SetPrinterChar(PrinterAChar printerAChar)
-        {
-            this.printerAChar = printerAChar;
-        }
-
-
         public void Execute(PrinterAChar printerAChar)
         {
-            SetPrinterChar(printerAChar);
-            Thread xThread = new(() => printerAChar?.Print100Chars('X'));
-            Thread yThread = new(() => printerAChar?.Print100Chars('Y'));
+            Thread xThread = new(() => printerAChar.Print100Chars('X'));
+            Thread yThread = new(() => printerAChar.Print100Chars('Y'));
             xThread.IsBackground = true;
             yThread.IsBackground = true;
 
@@ -24,6 +21,7 @@
             xThread.Start();
 
             xThread.Join();
+
         }
     }
 }

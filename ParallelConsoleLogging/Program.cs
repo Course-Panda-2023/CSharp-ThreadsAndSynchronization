@@ -1,23 +1,28 @@
-﻿using ParallelConsoleLogging;
+﻿
+using ParallelConsoleLogging;
+using System.Collections.Specialized;
 
-PrinterAChar printer = new PrinterAChar();
+PrinterAChar printerAChar = new();
 
-// Instantiate a Config object and get its command keys
-Config config = new Config();
-var commandKeys = config.Commands.Keys.ToList();
-
-// Print the command keys to the console with their index
-for (int i = 0; i < commandKeys.Count; i++)
-{
-    Console.WriteLine($"{i + 1}. {commandKeys[i]}");
+unsafe
+{ 
+    int* p = stackalloc int[1];
+    *p = (int)'A';
+    Console.WriteLine(*p);
 }
 
-// Read user input and execute the corresponding command
-string? userInput = Console.ReadLine()?.Trim();
-if (!string.IsNullOrEmpty(userInput))
+Config Config = new();
+
+foreach (var key in Config.Commands.Keys)
 {
-    Command command = config.GetCommand(userInput);
-    command.Execute(printer);
+    Console.WriteLine(key);
 }
+
+string? userInput = Console.ReadLine();
+
+if (userInput == null) return;
+Command command = Config.GetCommand(userInput);
+
+command.Execute(printerAChar);
 
 Console.ReadLine();
