@@ -35,17 +35,15 @@ public class Solution
         t3.RunAllThreadsByCPU(str);
     }
 
-    public static void Assignment4Part1()
+    public void Assignment4Part1()
     {
-        /*
-        * Write code here
-        */
+        Task4 t4 = new Task4();
+        t4.RunThreads();
     }
 
-    public static void Assignment4Part2()
+    public void Assignment4Part2()
     {
-        /*
-        * Write code here
-        */
+        Task4 t4 = new Task4();
+        t4.RunThreadsWithLocking();
     }
 }
