@@ -100,23 +100,25 @@ public class Solution
         object lockKey = new object();
         Thread t1 = new Thread(() => 
         {
-            for (int i = 1; i <= 50 ; i++)
-                lock (lockKey)
-                {
-                    Console.WriteLine(i); 
-                }
+            lock (lockKey)
+            {
+                for (int i = 1; i <= 10; i++)
+                    Console.WriteLine(i);
+            }
         });
 
         Thread t2 = new Thread(() => 
         {
-            for (int i = 51; i <= 100; i++)
-                lock (lockKey)
-                {
+            lock (lockKey)
+            {
+                for (int i = 11; i <= 20; i++)
                     Console.WriteLine(i);
-                }
+            }
         });
-        t1.Start();
+
         t2.Start();        
+
+        t1.Start();
         
 
 
