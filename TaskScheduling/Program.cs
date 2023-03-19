@@ -7,6 +7,8 @@ TaskScheduling<int, string> ts = new TaskScheduling<int, string>(8);
 Thread TaskAdderAndRemover = new Thread(() => AddRemoveTask(ts));
 TaskAdderAndRemover.Start();
 
+Console.ReadLine();
+
 static void AddRemoveTask(TaskScheduling<int, string> ts)
 {
     ts.AddTask(Function1, 5);

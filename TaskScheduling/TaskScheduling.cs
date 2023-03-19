@@ -60,12 +60,18 @@ namespace TaskScheduling
         {
             lock(this)
             {
-                foreach (var t in taskQueue)
+                if(taskQueue.Count == 0)
+                {
+                    timer.Stop();
+                    Console.WriteLine("No more tasks to run. Enter any key to end the program.");
+                }
+                else foreach (var t in taskQueue)
                 {
                     if (t.Value == count)
                     {
                         Func<T, V> task = t.Key;
                         Console.WriteLine(task(input));
+                        taskQueue.Remove(task);
                     }
                 }
             }
