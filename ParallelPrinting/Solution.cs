@@ -102,7 +102,7 @@ public class Solution
         {
             lock (lockKey)
             {
-                for (int i = 1; i <= 10; i++)
+                for (int i = 1; i <= 50; i++)
                     Console.WriteLine(i);
             }
         });
@@ -111,7 +111,7 @@ public class Solution
         {
             lock (lockKey)
             {
-                for (int i = 11; i <= 20; i++)
+                for (int i = 51; i <= 100; i++)
                     Console.WriteLine(i);
             }
         });
