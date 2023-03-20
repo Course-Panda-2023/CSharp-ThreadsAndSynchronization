@@ -1,36 +1,41 @@
 ﻿using System;
+using System.Threading;
 
 namespace Basic
 {
-    public class SevenBoom
+    public class SevenBoomBonus
     {
         const int MaxNums = 200;
         static NumObj? obj;
-        public SevenBoom()
+        private ManualResetEvent[] _resetEvents;
+
+        public SevenBoomBonus()
         {
             obj = new NumObj();
             obj.num = 1;
+            _resetEvents = new ManualResetEvent[4];
+            for (int i = 0; i < _resetEvents.Length; i++)
+            {
+                _resetEvents[i] = new ManualResetEvent(false);
+            }
         }
+
         public void SimulateGameForThread(int threadnum)
         {
             while (obj.num < MaxNums)
             {
-                lock(obj)
+                lock (obj)
                 {
-                    if (obj.num <= 200)
+                    if (obj.num > MaxNums) break;
+                    if (obj.num % 4 == threadnum - 1)
                     {
-                        if (obj.num % 4 == threadnum - 1)
-                        {
-                            HandleNumbers();
-                            Thread.Sleep(200);
-                            obj.num++;
-                        }
-                    } else
-                    {
-                        break;
+                        HandleNumbers();
+                        Thread.Sleep(200);
+                        obj.num++;
                     }
                 }
             }
+            _resetEvents[threadnum - 1].Set();
         }
 
         private static void HandleNumbers()
@@ -50,6 +55,8 @@ namespace Basic
             t2.Start();
             t3.Start();
             t4.Start();
+        
+            WaitHandle.WaitAll(_resetEvents);
 
             t1.Join();
             t2.Join();

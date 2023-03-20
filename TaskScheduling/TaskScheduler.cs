@@ -9,7 +9,7 @@ public class Task_Scheduler
 {
     private DateTime startTime;
     private int elapsedSeconds;
-    private List<MyTask<string, string>> taskList;
+    private List<MyTask> taskList;
 
     public Task_Scheduler()
     {
@@ -95,6 +95,7 @@ public class Task_Scheduler
         }
         Console.WriteLine("too late... complete past time");
     }
+
     public void PrintAllCurrentTasks()
     {
         for (int i = 0; i < taskList.Count; i++)
