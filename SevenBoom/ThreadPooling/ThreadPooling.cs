@@ -1,6 +1,6 @@
-﻿namespace SevenBoom.OrdinalThreading
+﻿namespace SevenBoom.ThreadPooling
 {
-    internal class FourThreads
+    internal class ThreadPooling
     {
         private readonly uint seven = 7;
 
@@ -43,25 +43,10 @@
         public void Execute()
         {
             ObjectThatContainsInteger integer = new();
-
-            Thread thread1 = new Thread(() => SevenBoomTill200Threading(integer, 0));
-            Thread thread2 = new Thread(() => SevenBoomTill200Threading(integer, 1));
-            Thread thread3 = new Thread(() => SevenBoomTill200Threading(integer, 2));
-            Thread thread4 = new Thread(() => SevenBoomTill200Threading(integer, 3));
-
-            thread1.Start();
-            thread1.Join();
-
-            thread2.Start();
-            thread2.Join();
-
-
-            thread3.Start();
-            thread3.Join();
-
-
-            thread4.Start();
-            thread4.Join();
+            for (uint index = 0; index < 4; ++index)
+            {
+                ThreadPool.QueueUserWorkItem((obj) => SevenBoomTill200Threading(integer, (int)index!), (object)index);
+            }
         }
     }
 }
