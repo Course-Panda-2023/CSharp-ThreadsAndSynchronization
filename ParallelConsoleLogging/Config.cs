@@ -40,7 +40,7 @@ namespace ParallelConsoleLogging
 
         private PrinterAChar? printerAChar;
 
-         public void SetPrinterChar(PrinterAChar printerAChar)
+        public void SetPrinterChar(PrinterAChar printerAChar)
         {
             this.printerAChar = printerAChar;
         }

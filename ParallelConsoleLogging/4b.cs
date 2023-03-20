@@ -1,50 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ParallelConsoleLogging
+﻿namespace ParallelConsoleLogging
 {
     internal class _4b : Command
     {
-        private static readonly object lockObject = new object();
-        public void PrintNumbers1()
-        {
-            for (int i = 1; i <= 100; i++)
-            {
-                lock (lockObject)
-                {
-                    Console.WriteLine($"Thread 1: {i}");
-                    Thread.Sleep(100);
-                }
-            }
-        }
+        static object lockObj = new object();
 
-        public void PrintNumbers2()
-        {
-            for (int i = 1; i <= 100; i++)
-            {
-                lock (lockObject)
-                {
-                    Console.WriteLine($"Thread 2: {i}");
-                    Thread.Sleep(100);
-                }
-            }
-        }
         public void Execute(PrinterAChar printerAChar)
         {
-            Thread printingThread1 = new Thread(PrintNumbers1);
-            Thread printingThread2 = new Thread(PrintNumbers2);
-            printingThread1.Start();
-            printingThread2.Start();
+            Thread thread1 = new Thread(new ThreadStart(PrintThread1));
+            Thread thread2 = new Thread(new ThreadStart(PrintThread2));
 
-            // Wait for both printing threads to finish before exiting the program
-            printingThread1.Join();
-            printingThread2.Join();
+            // Start the first thread
+            thread1.Start();
 
-            Console.WriteLine("Main thread ended");
+            // Wait for the first thread to finish
+            thread1.Join();
 
+            Console.ReadLine();
+
+        }
+
+        static void PrintThread1()
+        {
+            // Print 10 numbers
+            for (int i = 1; i <= 10; i++)
+            {
+                lock (lockObj)
+                {
+                    Console.WriteLine($"Thread 1: {i}");
+                }
+
+                // Wait for 1 second before printing the next number
+                Thread.Sleep(1000);
+            }
+        }
+
+        static void PrintThread2()
+        {
+            // Print 10 letters
+            for (char c = 'A'; c <= 'J'; c++)
+            {
+                lock (lockObj)
+                {
+                    Console.WriteLine($"Thread 2: {c}");
+                }
+
+                // Wait for 1 second before printing the next letter
+                Thread.Sleep(1000);
+            }
         }
     }
 }

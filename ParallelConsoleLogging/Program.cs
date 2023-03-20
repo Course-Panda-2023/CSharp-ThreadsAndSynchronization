@@ -1,11 +1,9 @@
-﻿
-using ParallelConsoleLogging;
-using System.Collections.Specialized;
+﻿using ParallelConsoleLogging;
 
 PrinterAChar printerAChar = new();
 
 unsafe
-{ 
+{
     int* p = stackalloc int[1];
     *p = (int)'A';
     Console.WriteLine(*p);
