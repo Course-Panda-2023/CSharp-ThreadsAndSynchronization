@@ -1,6 +1,4 @@
-﻿
-using SevenBoom.OrdinalThreading;
-using SevenBoom.ThreadPooling;
+﻿using SevenBoom.ThreadPooling;
 
 /*
 FourThreads ordinalVersion = new();
