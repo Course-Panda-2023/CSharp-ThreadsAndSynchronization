@@ -30,49 +30,40 @@ namespace TaskScheduling
         }
         public void AddTask(Func<T, V> task, int time)
         {
-            lock (this)
-            {
-                taskQueue.Add(task, time);
-                Console.WriteLine($"Task added successfully");
-            }
+            taskQueue.Add(task, time);
+            Console.WriteLine($"Task added successfully");
         }
 
         public void RemoveTask(Func<T, V> task)
         {
-            lock (this)
+            if(taskQueue.ContainsKey(task))
             {
-                if(taskQueue.ContainsKey(task))
+                var t = taskQueue[task];
+                if (t <= count)
                 {
-                    var t = taskQueue[task];
-                    if (t <= count)
-                    {
-                        Console.WriteLine("Too late!");
-                    }
-                    else
-                    {
-                        taskQueue.Remove(task);
-                        Console.WriteLine($"Task removed successfully");
-                    }
+                    Console.WriteLine("Too late!");
+                }
+                else
+                {
+                    taskQueue.Remove(task);
+                    Console.WriteLine($"Task removed successfully");
                 }
             }
         }
         public void RunProgram()
         {
-            lock(this)
+            if(taskQueue.Count == 0)
             {
-                if(taskQueue.Count == 0)
+                timer.Stop();
+                Console.WriteLine("No more tasks to run. Enter any key to end the program.");
+            }
+            else foreach (var t in taskQueue)
+            {
+                if (t.Value == count)
                 {
-                    timer.Stop();
-                    Console.WriteLine("No more tasks to run. Enter any key to end the program.");
-                }
-                else foreach (var t in taskQueue)
-                {
-                    if (t.Value == count)
-                    {
-                        Func<T, V> task = t.Key;
-                        Console.WriteLine(task(input));
-                        taskQueue.Remove(task);
-                    }
+                    Func<T, V> task = t.Key;
+                    Console.WriteLine(task(input));
+                    taskQueue.Remove(task);
                 }
             }
         }
