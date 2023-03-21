@@ -39,9 +39,8 @@ public class Solution
 
     public static void Assignment2(string str)
     {
-        //Thread print = new Thread(new ThreadStart(PrintString5Times));
-        Thread print = new Thread(() => PrintString5Times(str));
         PrintString5Times(str);
+        Thread print = new Thread(() => PrintString5Times(str));
         print.Start();
     }
     public static void PrintString5Times(string str)
@@ -53,22 +52,20 @@ public class Solution
     }
     public static void Assignment3Part1(string str)
     {
-        ThreadPool.QueueUserWorkItem(ThreadProc, str);
-        ThreadPool.QueueUserWorkItem(ThreadProc2);
+        ThreadPool.QueueUserWorkItem(Thread1, str);
+        ThreadPool.QueueUserWorkItem(Thread2);
         Console.WriteLine("Main thread");
         Thread.Sleep(1000);
 
         Console.WriteLine("Main thread exits.");
     }
-    static void ThreadProc(Object str)
+    static void Thread1(Object str)
     {
-        // No state object was passed to QueueUserWorkItem, so stateInfo is null.
-        Console.WriteLine("Hello from the thread pool." + str);
+        Console.WriteLine("hello " + str);
     }
-    static void ThreadProc2(Object stateInfo)
+    static void Thread2(Object doesntMatter)
     {
-        // No state object was passed to QueueUserWorkItem, so stateInfo is null.
-        Console.WriteLine("Hello from the thread pool 2.");
+        Console.WriteLine("goddbye ");
     }
 
     public static void Assignment3Part2(string str)
