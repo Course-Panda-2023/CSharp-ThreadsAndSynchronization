@@ -94,7 +94,10 @@ public class Solution
 
     public static void PrintNumbersPart1()
     {
-
+        for (int i = 1; i <= 100; i++)
+        {
+            Console.WriteLine(i);
+        }
     }
 
     public static void Assignment4Part2()
