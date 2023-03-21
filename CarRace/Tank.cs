@@ -8,6 +8,7 @@ namespace CarRace
 {
     internal struct Tank
     {
+        public uint CurrentFuel { get; set; }
         public uint Fuel { get; init; }
 
         public bool IsTankEmapty()

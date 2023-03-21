@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Timers;
 
 namespace CarRace
 {
@@ -11,24 +9,34 @@ namespace CarRace
     {
         public Car CarInRace { get; set; }
 
-        public double KilometersPassed { get; set; }
+        public double? KilometersPassed { get; set; }
     }
 
     internal class Race
     {
-        public List<Car>? Cars { get; init; }
+        
 
-        public double? Kilometers = 8.8;
+        public double? Meters = 8800;
 
-        private double Second = 1000;
+        System.Timers.Timer timer = new(1000);
 
-        Timer timer = new(Second);
 
-        public void RaceMonitoring()
+        public void Init() 
+        { 
+            foreach (Car car in CarsStatic.Cars!)
+            {
+                CarsStatic.CarRaceStatus?.Add(new CarRace.CarRaceStatus() { CarInRace = car, KilometersPassed = 0 });
+            }
+        }
+
+        public void Processing()
         {
-            timer.Elapsed += OnTimerTick;
-            timer.Start();
-            Console.ReadLine();
+            for (int i = 0; i < CarsStatic.CarRaceStatus.Count; i++)
+            {
+                var status = CarsStatic.CarRaceStatus[i];
+                status.KilometersPassed += status.CarInRace.CurrentVelocity + status.CarInRace.Accelaration * status.CarInRace.Accelaration;
+                CarsStatic.CarRaceStatus[i] = status;
+            }
         }
 
 
