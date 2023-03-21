@@ -17,7 +17,6 @@ namespace Racing
         private int currentSpeed;
         private int lapCounter;
         private bool won;
-        private DateTime lastTime;
 
         public string Name { get { return name; } }
         public int MaxSpeed { get { return maxSpeed; } }
@@ -28,7 +27,6 @@ namespace Racing
         public int CurrentSpeed { get { return currentSpeed; } set { currentSpeed = value; } }
         public int LapCounter { get { return lapCounter; } set { lapCounter = value; } }
         public bool Won { get { return won; } set { won = value; } }
-        public DateTime LastTime { get { return lastTime; } set { lastTime = value; } }
 
 
         public Car (string name, int maxSpeed, double acceleration, int passengerAmount, int gasTankSize)
@@ -42,7 +40,6 @@ namespace Racing
             currentSpeed = 0;
             lapCounter = 1;
             won = false;
-            lastTime = DateTime.Now;
         }
     }
 }
