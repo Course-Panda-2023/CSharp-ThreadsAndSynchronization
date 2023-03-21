@@ -145,7 +145,7 @@ namespace Racing
                 PassengersForEach.RemoveAt(carNumber);
             } else
             {
-                Console.WriteLine("no participants to remove");
+                Console.WriteLine("No participants to remove");
             }
 
         }
@@ -161,6 +161,8 @@ namespace Racing
                 Console.WriteLine("4. Add participant");
                 Console.WriteLine("5. Remove participant");
                 Console.WriteLine("6. Exit");
+                Console.WriteLine("Race Status:");
+                PrintRaceStatus();
 
                 string choice = Console.ReadLine();
                 switch (choice)
@@ -184,7 +186,7 @@ namespace Racing
                         exit = true;
                         break;
                     default:
-                        Console.WriteLine("Invalid option. Please try again.");
+                        Console.WriteLine("invalid input");
                         break;
                 }
             }
