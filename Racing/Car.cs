@@ -11,6 +11,7 @@ namespace Racing
         public double CurrentFuel { get; set; }
         public float Acceleration { get; set; }
         public int MaxPassengers { get; set; }
+        private static int NumOfPlace = 1;
 
         public Car(string carName, float maxSpeed, float acceleration, int maxPassengers, double maxFuel)
         {
@@ -46,6 +47,8 @@ namespace Racing
                 if (CurrentFuel > 0)
                 {
                     Console.WriteLine($"{CarName} finished the race with {Math.Round(CurrentFuel)}L of fuel.");
+                    Console.WriteLine($"{CarName} finished the race at place {NumOfPlace}");
+                    NumOfPlace++;
                 }
             });
             drivingThread.Start();
