@@ -14,9 +14,7 @@ namespace CarRace
 
     internal class Race
     {
-        
-
-        public double? Meters = 8800;
+        public double? AreaLongMeters = 8800;
 
         System.Timers.Timer timer = new(1000);
 
@@ -36,6 +34,12 @@ namespace CarRace
                 var status = CarsStatic.CarRaceStatus[i];
                 status.KilometersPassed += status.CarInRace.CurrentVelocity + status.CarInRace.Accelaration * status.CarInRace.Accelaration;
                 CarsStatic.CarRaceStatus[i] = status;
+            }
+
+            CarsStatic.Cars.Clear();
+            foreach (CarRaceStatus carRaceStatus in CarsStatic.CarRaceStatus)
+            {
+                CarsStatic.Cars.Add(carRaceStatus.CarInRace);
             }
         }
 

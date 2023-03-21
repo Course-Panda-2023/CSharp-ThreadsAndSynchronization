@@ -25,22 +25,24 @@ cars = carsXML.Descendants("car").Select(car =>
         Tank = tank
     }).ToList();
 
-CarsStatic.Cars = cars;
+foreach (var car in cars)
+{
+    CarsStatic.CarRaceStatus.Add(new CarRaceStatus { CarInRace = car, KilometersPassed = 0 });
+}
 
 
 Race race = new()
 {
-    Meters = 10000
+    AreaLongMeters = 10000
 };
 
 race.Init();
 
 var tasks = new List<Task>();
 
-for (int index = 0; index < cars.Count - 1; ++index)
+for (int index = 0; index < CarsStatic.CarRaceStatus.Count - 1; ++index)
 {
-    tasks.Add(Task.Run(() => cars[index].DoRandomStep()));
-    ThreadPool.QueueUserWorkItem((obj) => cars[index].DoRandomStep(), (object) index);
+    tasks.Add(Task.Run(() => CarsStatic.CarRaceStatus[index].CarInRace.DoRandomStep()));
 }
 
 Task.WaitAll(tasks.ToArray());
