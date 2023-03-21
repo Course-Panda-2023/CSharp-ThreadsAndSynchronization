@@ -1,9 +1,9 @@
 ﻿//EX1   
 
-//using Basic;
+using Basic;
 
-//SevenBoom s = new SevenBoom();
-//s.run();
+SevenBoom s = new SevenBoom();
+s.run();
 
 
 //EX2   
@@ -15,8 +15,8 @@
 
 //EX3
 
-using Bonus;
+//using Bonus;
 
-SevenBoomBonus s = new SevenBoomBonus();
-s.Run();
-Console.ReadLine();
+//SevenBoomBonus s = new SevenBoomBonus();
+//s.Run();
+//Console.ReadLine();
