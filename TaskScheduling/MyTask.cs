@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-public class MyTask //named mytask to not confuse self with the real task builtin class
+﻿public class MyTask<T, V>
 {
-    public string TaskName { get; set; }
+    public T TaskFunction { get; set; }
     public int TaskTime { get; set; }
     public bool IsCompleted { get; set; }
-    public MyTask(string taskName, int taskTime, bool isCompleted)
+    public V Result { get; set; }
+    public object[] Parameters { get; set; }
+
+    public MyTask(T taskFunction, int taskTime, params object[] parameters)
     {
-        TaskName = taskName;
+        TaskFunction = taskFunction;
         TaskTime = taskTime;
-        IsCompleted = isCompleted;
+        IsCompleted = false;
+        Parameters = parameters;
     }
 }
-

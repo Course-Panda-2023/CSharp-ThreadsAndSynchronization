@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading;
-
-public class Task_Scheduler
+﻿public class Task_Scheduler<T, V> where T : Delegate
 {
     private DateTime startTime;
     private int elapsedSeconds;
-    private List<MyTask> taskList;
+    private List<MyTask<T, V>> taskList;
 
     public Task_Scheduler()
     {
@@ -19,7 +12,7 @@ public class Task_Scheduler
         Thread t = new Thread(new ThreadStart(UpdateElapsedSeconds));
         t.Start();
 
-        taskList = new List<MyTask>();
+        taskList = new List<MyTask<T, V>>();
     }
 
     public int ElapsedSeconds
@@ -39,125 +32,61 @@ public class Task_Scheduler
             if (elapsedSeconds != oldElapsedSeconds)
             {
                 ElapsedSecondsChanged?.Invoke(this, EventArgs.Empty);
+                OnElapsedSecondsChanged();
             }
 
             Thread.Sleep(1000);
         }
     }
 
-    public MyTask AddToTaskList()
+    public void AddTask(MyTask<T, V> task, int taskTime)
     {
-        MyTask t;
-        Console.WriteLine("adding new task");
-        Console.WriteLine("");
+        if (taskTime <= elapsedSeconds)
+        {
+            throw new Exception("task time must be at future");
+        }
 
-        // Subscribe to the ElapsedSecondsChanged event
-        ElapsedSecondsChanged += (sender, e) =>
-        {
-            Console.SetCursorPosition(0, Console.CursorTop - 1);
-            Console.WriteLine("at what time do you want your task? current time: {0}", ElapsedSeconds);
-        };
-        Console.WriteLine("at what time do you want your task? current time: {0}", ElapsedSeconds);
-        int time = int.Parse(Console.ReadLine());
-        ElapsedSecondsChanged = null;
-        if (time > this.ElapsedSeconds)
-        {
-            Console.WriteLine("name of your task?: ");
-            string name = Console.ReadLine();
-            bool iscomplete = false;
-            t = new MyTask(name, time, iscomplete);
-            taskList.Add(t);
-        }
-        else
-        {
-            throw new Exception("cant add tasks to the past");
-        }
-        return t;
-    }
-    public void RemoveFromTaskList(int id)
-    {
-        if (!(this.taskList[id].IsCompleted))
-        {
-            taskList.RemoveAt(id);
-            Console.WriteLine("removal successful");
-            return;
-        }
-        Console.WriteLine("too late... already completed");
+        task.TaskTime = taskTime;
+        taskList.Add(task);
     }
 
-    public void MarkMissionAsComplete(int id)
+    private void OnElapsedSecondsChanged()
     {
-        if (this.taskList[id].TaskTime > ElapsedSeconds)
+        foreach (var task in taskList.ToArray())
         {
-            this.taskList[id].IsCompleted = true;
-            Console.WriteLine("marked as completed");
-            return;
+            if (task.TaskTime == elapsedSeconds)
+            {
+                PerformTask(task);
+            }
         }
-        Console.WriteLine("too late... complete past time");
     }
 
-    public void PrintAllCurrentTasks()
+
+    private void PerformTask(MyTask<T, V> task)
     {
-        for (int i = 0; i < taskList.Count; i++)
+        if (!task.IsCompleted)
         {
-            var item = taskList[i];
-            Console.WriteLine("id: {0}, task name: {1}, task time: {2}, is complete: {3}", i, item.TaskName, item.TaskTime, item.IsCompleted);
+            task.IsCompleted = true;
+            task.Result = (V?)task.TaskFunction.DynamicInvoke(task.Parameters);
         }
     }
-    public void MenuPrompt()
+
+
+    public void RemoveTask(MyTask<T, V> task)
     {
-        int input;
-        Console.WriteLine("welcome to the task scheduler, what do you want to do?");
-        Console.WriteLine("1. add task");
-        Console.WriteLine("2. complete task");
-        Console.WriteLine("3. remove task");
-        Console.WriteLine("current tasks:");
-        PrintAllCurrentTasks();
-        ElapsedSecondsChanged += (sender, e) =>
+        if (taskList.Contains(task))
         {
-            Console.SetCursorPosition(0, Console.CursorTop - 1);
-            Console.WriteLine("current time: {0}", ElapsedSeconds);
-        };
-        Console.WriteLine("current time: {0}", ElapsedSeconds);
-        input = int.Parse(Console.ReadLine());
-        switch (input)
-        {
-            case 1:
-                ElapsedSecondsChanged = null;
-                AddToTaskList();
-                break;
-            case 2:
-                ElapsedSecondsChanged = null;
-                if (taskList.Count != 0)
-                {
-                    PrintAllCurrentTasks();
-                    Console.WriteLine("write in index to complete: ");
-                    int inputComplete = int.Parse(Console.ReadLine());
-                    MarkMissionAsComplete(inputComplete);
-                }
-                else
-                {
-                    Console.WriteLine("empty list");
-                }
-                break;
-            case 3:
-                ElapsedSecondsChanged = null;
-                if (taskList.Count != 0)
-                {
-                    PrintAllCurrentTasks();
-                    Console.WriteLine("write in index to remove: ");
-                    int removalInput = int.Parse(Console.ReadLine());
-                    RemoveFromTaskList(removalInput);
-                }
-                else
-                {
-                    Console.WriteLine("empty list");
-                }
-                break;
-            default:
-                ElapsedSecondsChanged = null;
-                Console.WriteLine("invalid input");
-                break;
+            if (task.IsCompleted)
+            {
+                Console.WriteLine("too late ):");
+                return;
+            }
+            else
+            {
+                taskList.Remove(task);
+                Console.WriteLine("removed successfully!.");
+            }
         }
     }
+
 }
