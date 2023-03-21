@@ -2,38 +2,28 @@
 
 public class Solution
 {
-    public static void Assignment1()
+    public static string Function1(int num)
     {
-        /*
-        * Write code here
-        */
+        return $"The number from the input is {num}";
     }
 
-    public static void Assignment2()
+    public static int Function2(string str)
     {
-        /*
-        * Write code here
-        */
+        return str.Length;
     }
 
-    public static void Assignment3()
+    public static string Function3(int num)
     {
-        /*
-        * Write code here
-        */
+        return $"The string you entered: {num}";
     }
 
-    public static void Assignment4()
+    public static double Function4(double num)
     {
-        /*
-        * Write code here
-        */
+        return Math.Sqrt(num);
     }
 
-    public static void Assignment5()
+    public static string Function5(int num)
     {
-        /*
-        * Write code here
-        */
+        return $"The char is: {num}";
     }
 }
