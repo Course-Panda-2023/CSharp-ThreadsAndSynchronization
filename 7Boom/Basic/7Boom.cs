@@ -43,7 +43,7 @@ namespace Basic
             {
                 lock (obj)
                 {
-                    if (obj.Num % numOfThreads == (threadNum - 1) && obj.Num <= 200)
+                    if (obj.Num % numOfThreads == (threadNum - 1) && obj.Num <= numberLimit)
                     {
                         string currentNum = obj.Num.ToString();
                         if (obj.Num % seven == 0 || currentNum.Contains(seven.ToString()))

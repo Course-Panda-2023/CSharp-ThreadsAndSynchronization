@@ -22,7 +22,7 @@ namespace ThreadPool
             {
                 lock (obj)
                 {
-                    if (obj.Num % numOfThreads == ((int)threadNum - 1) && obj.Num <= 200)
+                    if (obj.Num % numOfThreads == ((int)threadNum - 1) && obj.Num <= numberLimit)
                     {
                         mCallBack(obj.Num);
                         obj.Num++;
