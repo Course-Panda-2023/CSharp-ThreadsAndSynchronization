@@ -108,11 +108,34 @@ namespace Racing
 
         public void Run()
         {
-            Car c1 = new Car("lamborghini", 250, 10, 3, GasTankSize);
-            Car c2 = new Car("ferrari", 260, 8, 3, GasTankSize);
+            List<Car> carList = new List<Car>();
+            int input = 0;
+            while(input != -1)
+            {
+                Console.WriteLine("\nEnter 1 to add car");
+                Console.WriteLine("Enter -1 to start race");
+                input = Convert.ToInt32(Console.ReadLine());
+                if(input == 1)
+                {
+                    Console.WriteLine("Enter car's name:");
+                    string name = Console.ReadLine();
+                    Console.WriteLine("Enter car's maximum speed:");
+                    int maxSpeed = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter car's acceleration:");
+                    int acceleration = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter car's passenger amount:");
+                    int passengerAmount = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter car's gas tank size:");
+                    int gasTankSize = Convert.ToInt32(Console.ReadLine());
 
-            System.Threading.ThreadPool.QueueUserWorkItem(StartRace, c1);
-            System.Threading.ThreadPool.QueueUserWorkItem(StartRace, c2);
+                    Car c = new Car(name, maxSpeed, acceleration, passengerAmount, gasTankSize);
+                    carList.Add(c);
+                }
+            }
+            foreach(Car car in carList)
+            {
+                System.Threading.ThreadPool.QueueUserWorkItem(StartRace, car);
+            }
         }
     }
 }
