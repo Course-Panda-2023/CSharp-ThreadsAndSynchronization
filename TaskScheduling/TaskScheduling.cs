@@ -9,32 +9,32 @@ namespace TaskScheduling
 {
     public class TaskScheduling <T, V>
     {
-        private static Dictionary<Func<T, V>, int> taskQueue;
+        private static Dictionary<Tasks<T, V>, int> taskQueue;
         private static int count;
         private static System.Timers.Timer timer;
-        private T input;
+        //private T input;
 
-        public TaskScheduling(T input)
+        public TaskScheduling(/*T input*/)
         {
-            taskQueue = new Dictionary<Func<T, V>, int>();
+            taskQueue = new Dictionary<Tasks<T, V>, int>();
             count = 0;
-            this.input = input;
+            //this.input = input;
             InitTimer();
         }
         public void InitTimer()
         {
             timer = new System.Timers.Timer();
-            timer.Elapsed += new ElapsedEventHandler(timer_Tick);
+            timer.Elapsed += new ElapsedEventHandler(TimerTick);
             timer.Interval = 1000;
             timer.Start();
         }
-        public void AddTask(Func<T, V> task, int time)
+        public void AddTask(Tasks<T, V> task, int time)
         {
             taskQueue.Add(task, time);
             Console.WriteLine($"Task added successfully");
         }
 
-        public void RemoveTask(Func<T, V> task)
+        public void RemoveTask(Tasks<T, V> task)
         {
             if(taskQueue.ContainsKey(task))
             {
@@ -61,17 +61,23 @@ namespace TaskScheduling
             {
                 if (t.Value == count)
                 {
-                    Func<T, V> task = t.Key;
-                    Console.WriteLine(task(input));
+                    Tasks<T, V> task = t.Key;
+                    ThreadPool.QueueUserWorkItem(PrintFuncOutput, task);
                     taskQueue.Remove(task);
                 }
             }
         }
-        private void timer_Tick(object sender, ElapsedEventArgs e)
+        private void TimerTick(object sender, ElapsedEventArgs e)
         {
             count++;
             Console.WriteLine(count);
             RunProgram();
+        }
+
+        public void PrintFuncOutput(object obj)
+        {
+            Tasks<T, V> task = (Tasks<T, V>)obj;
+            Console.WriteLine(task.Task(task.Parameter));
         }
     }
 }
