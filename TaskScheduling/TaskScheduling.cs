@@ -12,13 +12,11 @@ namespace TaskScheduling
         private static Dictionary<Tasks<T, V>, int> taskQueue;
         private static int count;
         private static System.Timers.Timer timer;
-        //private T input;
 
-        public TaskScheduling(/*T input*/)
+        public TaskScheduling()
         {
             taskQueue = new Dictionary<Tasks<T, V>, int>();
             count = 0;
-            //this.input = input;
             InitTimer();
         }
         public void InitTimer()
