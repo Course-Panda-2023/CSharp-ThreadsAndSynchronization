@@ -1,39 +1,55 @@
 ﻿using System;
 
-public class Solution
+class Solution
 {
-    public static void Assignment1()
+    
+    public delegate V Mission<V,T>(T arg);
+    public class TaskScheduler<V,T>
     {
-        /*
-        * Write code here
-        */
-    }
+        public TaskScheduler(){}
+        public int time = 0;
+        List<Mission<V, T>> Missions = new List<Mission<V, T>>();
+        
+        public void AddTime()
+        {
+            this.time++;
+        }
+        public void PrintTime()
+        {
+            Console.WriteLine($"Time is {this.time}");
+        }
+        
+        public void performMission(Mission<V,T> mission, int milliseconds, T arg)
+        {
+            Thread.Sleep(milliseconds);
+            if (this.Missions.Contains(mission))
+            {
+                Console.WriteLine(mission(arg));
+                this.Missions.Remove(mission);
+            }
+        }
 
-    public static void Assignment2()
-    {
-        /*
-        * Write code here
-        */
-    }
+        public void AddMission(Mission<V,T> mission, int milliseconds, T arg)
+        {
+            this.Missions.Add(mission);
+            Thread t = new Thread(() => performMission(mission, milliseconds, arg));
+            t.Start();
+        }
 
-    public static void Assignment3()
-    {
-        /*
-        * Write code here
-        */
-    }
+        public void RemoveMission(Mission<V,T> mission)
+        {
+            if (this.Missions.Contains(mission))
+            {
+                this.Missions.Remove(mission);
+                Console.WriteLine("Mission removed.");
+            }
+            else
+            {
+                Console.WriteLine("Too late!");
+            }
+        }
 
-    public static void Assignment4()
-    {
-        /*
-        * Write code here
-        */
-    }
 
-    public static void Assignment5()
-    {
-        /*
-        * Write code here
-        */
     }
+    
 }
