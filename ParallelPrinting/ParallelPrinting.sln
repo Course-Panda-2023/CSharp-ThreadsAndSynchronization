@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParallelPrinting", "ParallelPrinting.csproj", "{479490C5-8BAA-488A-B68F-57EF89BB2007}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{479490C5-8BAA-488A-B68F-57EF89BB2007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{479490C5-8BAA-488A-B68F-57EF89BB2007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{479490C5-8BAA-488A-B68F-57EF89BB2007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{479490C5-8BAA-488A-B68F-57EF89BB2007}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0063EBB-BA45-43BC-B39E-99C0466144F8}
+	EndGlobalSection
+EndGlobal
