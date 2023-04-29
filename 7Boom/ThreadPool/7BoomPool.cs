@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Basic;
+using System;
 
-namespace ThreadPool
+
+namespace threadPool
 {
     public class SevenBoomPool
     {
@@ -45,6 +47,3 @@ namespace ThreadPool
         }
     }
 }
-
-
-new SevenBoom().RunWithThreadpool(4,200);
