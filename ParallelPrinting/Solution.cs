@@ -4,50 +4,36 @@ public class Solution
 {
     public static void Assignment1Part1()
     {
-        /*
-        * Write code here
-        */
+        Program.Assignment1(false);
     }
 
     public static void Assignment1Part2()
     {
-        /*
-        * Write code here
-        */
+        Program.Assignment1(true);
     }
 
     public static void Assignment2(string str)
     {
-        /*
-        * Write code here
-        */
+        Program.Assignment2(str);
     }
 
     public static void Assignment3Part1(string str)
     {
-        /*
-        * Write code here
-        */
+        Program.Assignment3Part1(str);
     }
 
     public static void Assignment3Part2(string str)
     {
-        /*
-        * Write code here
-        */
+        Program.Assignment3Part2(str);
     }
 
     public static void Assignment4Part1()
     {
-        /*
-        * Write code here
-        */
+        Program.Assignment4_part1();
     }
 
     public static void Assignment4Part2()
     {
-        /*
-        * Write code here
-        */
+        Program.Assignment4_part2();
     }
 }
